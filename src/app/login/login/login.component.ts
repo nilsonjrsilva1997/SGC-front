@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import {NgbAlert, NgbAlertConfig} from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   login:any;
 
-  constructor(private authService:AuthService, alertConfig: NgbAlertConfig, private renderer2: Renderer2, private toastr:ToastrService) { 
+  constructor(private authService:AuthService, alertConfig: NgbAlertConfig, private renderer2: Renderer2, private toastr:ToastrService, private router:Router) { 
     this.messageBox = new ElementRef('');
   }
 
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
     this.authService.signin(this.login).subscribe(response => {
       localStorage.setItem('token', response.access_token);
       this.toastr.success('Vamos lá!', 'Bem Vindo');
+      this.router.navigate(['home']);
     }, err => {
       this.toastr.error('Login ou senha incorretos', 'Erro');
     });

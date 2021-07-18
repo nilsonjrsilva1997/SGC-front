@@ -12,21 +12,23 @@
         <div class="row">
             <div class="col-md-3 col-12">
                 <div class="form-group">
-                    <input type="text" class="form-control" required name="username" id="username"
-                        formControlName="name"
+                    <input type="text" class="form-control" required formControlName="name"
                         placeholder="Nome de usuário *">
+                    <div class="alert alert-danger mt-1" *ngIf="form.controls.name?.errors?.required">Name is required.</div>
                 </div>
             </div>
             <div class="col-md-3 col-12">
                 <div class="form-group">
                     <input type="text" class="form-control" required name="username" id="username"
                         placeholder="CPF/CNPJ *" mask="000.000.000-00||00.000.000/0000-00">
+                        <div class="alert alert-danger mt-1" *ngIf="form.controls.name?.errors?.required">Name is required.</div>
                 </div>
             </div>
             <div class="col-md-3 col-12">
                 <div class="form-group">
                     <input type="text" class="form-control" required name="username" id="username"
                         placeholder="E-mail *">
+                        <div class="alert alert-danger mt-1" *ngIf="form.controls.email?.errors?.required">Name is required.</div>
                 </div>
             </div>
             <div class="col-md-3 col-12">
@@ -41,8 +43,7 @@
             <div class="col-md-6 col-12">
                 <div class="form-group">
                     <input type="password" class="form-control" required name="username" id="username"
-                        formControlName="password"
-                        placeholder="Senha *">
+                        formControlName="password" placeholder="Senha *">
                 </div>
             </div>
 
@@ -60,6 +61,8 @@
                     <form [formGroup]="$any(phonesForm)">
                         <h2>Contato {{i + 1}}</h2>
                         <input type="text" class="form-control" formControlName="number" mask="(00) 00000-0000">
+                        <div class="alert alert-danger mt-1" *ngIf="$any(phonesForm).get('number').hasError('required')">O número é obrigatória</div>
+
                     </form>
                 </div>
             </div>
@@ -69,7 +72,7 @@
             <div class="col-md-12 col-12">
                 <button class="btn btn-primary" (click)="addPhones()">Adicionar Telefone</button>
             </div>
-        </div> 
+        </div>
 
 
         <div [formGroup]="form">
@@ -79,38 +82,53 @@
                         <h2>Endereço {{i + 1}}</h2>
                         <div class="row mt-3">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" placeholder="CEP *" formControlName="zipCode" mask="00000-000" (blur)="findAddress(i, $event)" >
+                                <input type="text" class="form-control" placeholder="CEP *" formControlName="zipCode"
+                                    mask="00000-000" (blur)="findAddress(i)">
+                                    <div class="alert alert-danger mt-1" *ngIf="$any(addressForm).get('zipCode').hasError('required')">CEP é obrigatório.</div>
                             </div>
-            
+
                             <div class="col-md-3">
                                 <input type="text" class="form-control" placeholder="Logradouro" formControlName="road">
+                                <div class="alert alert-danger mt-1" *ngIf="$any(addressForm).get('road').hasError('required')">Rua é obrigatório.</div>
                             </div>
-            
+
                             <div class="col-md-3">
                                 <input type="text" class="form-control" placeholder="Bairro" formControlName="district">
+                                <div class="alert alert-danger mt-1" *ngIf="$any(addressForm).get('district').hasError('required')">Bairro é obrigatório</div>
+
                             </div>
-            
+
                             <div class="col-md-3">
                                 <input type="text" class="form-control" placeholder="cidade" formControlName="city">
+                                <div class="alert alert-danger mt-1" *ngIf="$any(addressForm).get('city').hasError('required')">Cidade é obrigatória</div>
+
                             </div>
                         </div>
-            
+
                         <div class="row mt-3">
                             <div class="col-md-3">
                                 <input type="text" class="form-control" placeholder="Estado" formControlName="state">
+                                <div class="alert alert-danger mt-1" *ngIf="$any(addressForm).get('city').hasError('required')">Estado é obrigatória</div>
+
                             </div>
-            
+
                             <div class="col-md-3">
-                                <input type="text" class="form-control" placeholder="Complemento" formControlName="complement">
+                                <input type="text" class="form-control" p
+                                laceholder="Complemento"
+                                    formControlName="complement">
+                                    <div class="alert alert-danger mt-1" *ngIf="$any(addressForm).get('complement').hasError('required')">Complemento é obrigatória</div>
+
                             </div>
-            
+
                             <div class="col-md-3">
                                 <input type="text" class="form-control" placeholder="Número" formControlName="number">
+                                <div class="alert alert-danger mt-1" *ngIf="$any(addressForm).get('number').hasError('required')">O número é obrigatória</div>
                             </div>
-            
+
                             <div class="col-md-3">
-                                <input class="form-radio-input" type="radio" value="" id="flexCheckDefault" formControlName="isMain">
-            
+                                <input class="form-radio-input" type="radio" value="" id="flexCheckDefault"
+                                    formControlName="isMain">
+
                                 <label class="form-radio-label p-3" for="flexCheckDefault">
                                     Endereço principal
                                 </label>
@@ -120,7 +138,7 @@
                 </div>
             </div>
         </div>
-        
+
 
         <button (click)="addAddress()" class="btn btn-primary mt-3">Adicionar Endereço</button>
 

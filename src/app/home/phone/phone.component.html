@@ -1,0 +1,27 @@
+<app-nav></app-nav>
+
+<h1 class="mt-5 text-center">Meus telefones</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>#ID</td>
+            <td>Número</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let phone of phones">
+            <td>{{ phone.id }}</td>
+            <td>{{ phone.number }}</td>
+            <td>
+                <button class="btn btn-primary">Alterar</button>
+            </td>
+            <td>
+                <button class="btn btn-danger">Deletar</button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>

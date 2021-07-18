@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
   }
 
   addAddress() {
-    const addressForm = this.fb.group({
+    var addressForm = this.fb.group({
       zipCode: ['', Validators.required],
       road: ['', Validators.required],
       city: ['', Validators.required],
@@ -65,6 +65,8 @@ export class RegisterComponent implements OnInit {
 
   register() {
 
+    console.log(this.form.valid);
+
     if (!this.form.valid) {
       this.toastr.warning('Preencha todos os campos formulário', 'Atenção');
       return;
@@ -79,10 +81,16 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  findAddress(index:number, event:any) {
+  findAddress(index:number) {
     let zip = (this.form.controls['addresses'] as FormArray).at(index).value.zipCode
 
     this.viacep.findAddress(zip).subscribe(response => {
+      
+      if(response.erro == true) {
+        this.toastr.error('CEP não encontrado', 'Erro');
+        return;
+      }
+
       (this.form.controls['addresses'] as FormArray).at(index).patchValue({
         district: response.bairro,
         city: response.localidade,
@@ -91,7 +99,7 @@ export class RegisterComponent implements OnInit {
       });
 
     }, err => {
-
+      this.toastr.error('CEP não encontrado', 'Erro');
     });
   }
 }
