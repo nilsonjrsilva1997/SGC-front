@@ -4,37 +4,132 @@
             <h1 class="text-center">Inscreva-se</h1>
         </div>
     </div>
-    <div class="row  d-flex justify-content-center">
-        <div class="col-md-6 col-12">
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Email</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-            </div>
-        </div>
-    </div>
-
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-6 col-12">
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="exampleFormControlInput1">
-            </div>
-        </div>
-    </div>
-
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-6 col-12">
-            <div class="mb-3">
-                <button class="btn btn-success w-100">Logar</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-6 col-12">
-            <div class="mb-3">
-                <a href="/registro">Registrar-se</a>
-            </div>
-        </div>
-    </div>
 </div>
+
+
+<form [formGroup]="form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" required name="username" id="username"
+                        formControlName="name"
+                        placeholder="Nome de usuário *">
+                </div>
+            </div>
+            <div class="col-md-3 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" required name="username" id="username"
+                        placeholder="CPF/CNPJ *" mask="000.000.000-00||00.000.000/0000-00">
+                </div>
+            </div>
+            <div class="col-md-3 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" required name="username" id="username"
+                        placeholder="E-mail *">
+                </div>
+            </div>
+            <div class="col-md-3 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" required name="username" id="username"
+                        placeholder="Nome completo *">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <input type="password" class="form-control" required name="username" id="username"
+                        formControlName="password"
+                        placeholder="Senha *">
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <input type="email" class="form-control" required name="username" id="username"
+                        placeholder="E-mail *">
+                </div>
+            </div>
+        </div>
+
+        <div [formGroup]="form">
+            <div formArrayName="phones">
+                <div *ngFor="let phonesForm of phones.controls; let i = index">
+                    <form [formGroup]="$any(phonesForm)">
+                        <h2>Contato {{i + 1}}</h2>
+                        <input type="text" class="form-control" formControlName="number" mask="(00) 00000-0000">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 col-12">
+                <button class="btn btn-primary" (click)="addPhones()">Adicionar Telefone</button>
+            </div>
+        </div> 
+
+
+        <div [formGroup]="form">
+            <div formArrayName="addresses">
+                <div *ngFor="let addressForm of addresses.controls; let i = index">
+                    <form [formGroup]="$any(addressForm)">
+                        <h2>Endereço {{i + 1}}</h2>
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="CEP *" formControlName="zipCode" mask="00000-000" (blur)="findAddress(i, $event)" >
+                            </div>
+            
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="Logradouro" formControlName="road">
+                            </div>
+            
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="Bairro" formControlName="district">
+                            </div>
+            
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="cidade" formControlName="city">
+                            </div>
+                        </div>
+            
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="Estado" formControlName="state">
+                            </div>
+            
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="Complemento" formControlName="complement">
+                            </div>
+            
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="Número" formControlName="number">
+                            </div>
+            
+                            <div class="col-md-3">
+                                <input class="form-radio-input" type="radio" value="" id="flexCheckDefault" formControlName="isMain">
+            
+                                <label class="form-radio-label p-3" for="flexCheckDefault">
+                                    Endereço principal
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+
+        <button (click)="addAddress()" class="btn btn-primary mt-3">Adicionar Endereço</button>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="form-group d-flex justify-content-end">
+                    <input type="submit" class="btn btn-primary" (click)="register()" value="Registrar">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

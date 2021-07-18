@@ -8,6 +8,10 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
   },
   {
+    path: 'registro',
+    loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
+  },
+  {
     path: 'teste', component: TesteComponent
   }
 ];

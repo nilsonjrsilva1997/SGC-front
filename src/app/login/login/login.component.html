@@ -5,19 +5,31 @@
         </div>
     </div>
 
-    <form #frm="ngForm" (ngSubmit)="singin(frm)">
-        <div class="form-group">
-            <label for="nome">Nome de usuário</label>
-            <input type="text" class="form-control" name="username" id="username" [(ngModel)]="login.username">
+    <div class="row">
+        <div class="col-md-12 col-12">
+         
+            <form #frm="ngForm" (ngSubmit)="singin(frm)">
+                <div class="form-group">
+                    <label for="nome">Nome de usuário</label>
+                    <input type="text" class="form-control" required name="username" id="username" [(ngModel)]="login.username" #email="ngModel">
+                    <div *ngIf="email.invalid" class="alert alert-danger mt-1">
+                        Login deve ser informado
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="nome">Senha</label>
+                    <input type="password" class="form-control" #senha="ngModel" required name="password" id="password" [(ngModel)]="login.password">
+                    <div *ngIf="email.invalid" class="alert alert-danger mt-1">
+                        Senha deve ser informado
+                    </div>
+                </div>
+        
+                <div class="form-group d-flex justify-content-end">
+                    <a href="/registro" class="mr-3 py-3">Registre-se</a>
+                    <input type="submit" class="btn btn-primary" value="Logar" [disabled]="email.invalid || senha.invalid">
+                </div>
+            </form>
         </div>
-
-        <div class="form-group">
-            <label for="nome">Senha</label>
-            <input type="text" class="form-control" name="password" id="password" [(ngModel)]="login.password">
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary">
-        </div>
-    </form>
+    </div>
 </div>
