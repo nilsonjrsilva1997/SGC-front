@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from 'src/app/services/register.service';
 import { ViacepService } from 'src/app/services/viacep.service';
@@ -10,12 +11,15 @@ import { ViacepService } from 'src/app/services/viacep.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  constructor(private fb:FormBuilder, private registerService:RegisterService, private viacep:ViacepService, private toastr: ToastrService) {
+  constructor(private fb:FormBuilder, private registerService:RegisterService, private viacep:ViacepService, private toastr: ToastrService, private router:Router) {
     
   }
 
   form = this.fb.group({
     name: ['', Validators.required],
+    fullName: ['', Validators.required],
+    email: ['', Validators.required],
+    cpfCnpj: ['', Validators.required],
     password: ['', Validators.required],
     addresses: this.fb.array([]),
     phones: this.fb.array([]),
@@ -23,10 +27,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
 
-  }
-
-  addField(event:any) {
-    event.stopPropagation();
   }
 
   get addresses() {
@@ -64,9 +64,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-
-    console.log(this.form.valid);
-
     if (!this.form.valid) {
       this.toastr.warning('Preencha todos os campos formulário', 'Atenção');
       return;
@@ -75,7 +72,8 @@ export class RegisterComponent implements OnInit {
     let body = (this.form.value);
 
     this.registerService.register(body).subscribe(response => {
-      console.log(response);
+      this.toastr.success('Registro efetuado com sucesso', 'Sucesso!');
+      this.router.navigate(['login']);
     }, error => {
       this.toastr.error('Erro ao fazer registro', 'Erro');
     });
@@ -84,8 +82,7 @@ export class RegisterComponent implements OnInit {
   findAddress(index:number) {
     let zip = (this.form.controls['addresses'] as FormArray).at(index).value.zipCode
 
-    this.viacep.findAddress(zip).subscribe(response => {
-      
+    this.viacep.findAddress(zip).subscribe(response => {      
       if(response.erro == true) {
         this.toastr.error('CEP não encontrado', 'Erro');
         return;
@@ -97,9 +94,16 @@ export class RegisterComponent implements OnInit {
         road: response.logradouro,
         state: response.uf
       });
-
     }, err => {
       this.toastr.error('CEP não encontrado', 'Erro');
     });
+  }
+  
+  removePhone(phoneIndex:number) {
+    (this.form.controls['phones'] as FormArray).removeAt(phoneIndex);
+  }
+
+  removeAddress(addressIndex:number) {
+    (this.form.controls['addresses'] as FormArray).removeAt(addressIndex);
   }
 }

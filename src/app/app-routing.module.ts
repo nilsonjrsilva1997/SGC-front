@@ -18,6 +18,10 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
   {
+    path: 'registro-usuario',
+    loadChildren: () => import('./register-user/register-user.module').then(m => m.RegisterUserModule)
+  },
+  {
     path: 'teste', component: TesteComponent
   },
   {

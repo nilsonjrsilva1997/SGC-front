@@ -14,27 +14,27 @@
                 <div class="form-group">
                     <input type="text" class="form-control" required formControlName="name"
                         placeholder="Nome de usuário *">
-                    <div class="alert alert-danger mt-1" *ngIf="form.controls.name?.errors?.required">Name is required.</div>
+                    <div class="alert alert-danger mt-1" *ngIf="form.controls.name?.errors?.required">Nome de usuário é obrigatório.</div>
                 </div>
             </div>
             <div class="col-md-3 col-12">
                 <div class="form-group">
-                    <input type="text" class="form-control" required name="username" id="username"
+                    <input type="text" class="form-control" required formControlName="cpfCnpj"
                         placeholder="CPF/CNPJ *" mask="000.000.000-00||00.000.000/0000-00">
-                        <div class="alert alert-danger mt-1" *ngIf="form.controls.name?.errors?.required">Name is required.</div>
+                        <div class="alert alert-danger mt-1" *ngIf="form.controls.cpfCnpj?.errors?.required">Campo CPF ou CNPJ obrigatório.</div>
                 </div>
             </div>
             <div class="col-md-3 col-12">
                 <div class="form-group">
-                    <input type="text" class="form-control" required name="username" id="username"
-                        placeholder="E-mail *">
-                        <div class="alert alert-danger mt-1" *ngIf="form.controls.email?.errors?.required">Name is required.</div>
+                    <input type="text" class="form-control" required formControlName="fullName"
+                        placeholder="Nome Completo *">
+                        <div class="alert alert-danger mt-1" *ngIf="form.controls.fullName?.errors?.required">Nome completo é obrigatório.</div>
                 </div>
             </div>
             <div class="col-md-3 col-12">
                 <div class="form-group">
-                    <input type="text" class="form-control" required name="username" id="username"
-                        placeholder="Nome completo *">
+                    <input type="text" class="form-control" required placeholder="E-mail *" formControlName="email">
+                    <div class="alert alert-danger mt-1" *ngIf="form.controls.email?.errors?.required">E-mail é obrigatório.</div>
                 </div>
             </div>
         </div>
@@ -42,17 +42,11 @@
         <div class="row">
             <div class="col-md-6 col-12">
                 <div class="form-group">
-                    <input type="password" class="form-control" required name="username" id="username"
+                    <input type="password" class="form-control" required
                         formControlName="password" placeholder="Senha *">
+                        <div class="alert alert-danger mt-1" *ngIf="form.controls.password?.errors?.required">Senha é obrigatória.</div>
                 </div>
-            </div>
-
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <input type="email" class="form-control" required name="username" id="username"
-                        placeholder="E-mail *">
-                </div>
-            </div>
+            </div>           
         </div>
 
         <div [formGroup]="form">
@@ -62,7 +56,7 @@
                         <h2>Contato {{i + 1}}</h2>
                         <input type="text" class="form-control" formControlName="number" mask="(00) 00000-0000">
                         <div class="alert alert-danger mt-1" *ngIf="$any(phonesForm).get('number').hasError('required')">O número é obrigatória</div>
-
+                        <button class="btn btn-danger mt-1" (click)="removePhone(i)">Remover</button>
                     </form>
                 </div>
             </div>
@@ -126,12 +120,19 @@
                             </div>
 
                             <div class="col-md-3">
-                                <input class="form-radio-input" type="radio" value="" id="flexCheckDefault"
-                                    formControlName="isMain">
 
-                                <label class="form-radio-label p-3" for="flexCheckDefault">
-                                    Endereço principal
-                                </label>
+                                <select formControlName="isMain" class="form-control">
+                                    <option value="">Endereço principal?</option>
+                                    <option value="1">Sim</option>
+                                    <option value="0">Não</option>
+                                </select>
+
+                                <div class="alert alert-danger mt-1" *ngIf="$any(addressForm).get('isMain').hasError('required')">Campo obrigatória</div>                                
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-12 col-12">
+                                <button class="btn btn-danger" (click)="removeAddress(i)">Remover</button>
                             </div>
                         </div>
                     </form>
