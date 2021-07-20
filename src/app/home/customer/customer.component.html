@@ -1,0 +1,23 @@
+<app-nav></app-nav>
+
+<h1 class="text-center">Clientes</h1>
+
+<table class="table text-center">
+    <thead>
+        <tr>
+            <td><b>E-mail</b></td>
+            <td><b>Nome</b></td>
+            <td><b>CPF/CNPJ</b></td>
+            <td><b>Detalhes</b></td>
+        </tr>
+
+        <tr *ngFor="let customer of customers; let i = index">
+            <td>{{customer.email}}</td>
+            <td>{{customer.name}}</td>
+            <td>{{customer.cpfCnpj}}</td>
+            <td>
+                <button class="btn btn-success" (click)="show(i)">Detalhes...</button>
+            </td>
+        </tr>
+    </thead>
+</table>

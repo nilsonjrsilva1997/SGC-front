@@ -12,6 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaskModule } from 'ngx-mask';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { ToastrModule } from 'ngx-toastr';
   providers: [
     HttpClientModule,
     TesteService,
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

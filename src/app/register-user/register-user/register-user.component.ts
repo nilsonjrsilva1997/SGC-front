@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterUserService } from 'src/app/services/register-user.service';
 
@@ -10,7 +11,7 @@ import { RegisterUserService } from 'src/app/services/register-user.service';
 })
 export class RegisterUserComponent implements OnInit {
 
-  constructor(private formBuilder:FormBuilder, private regService:RegisterUserService, private toastr:ToastrService) {
+  constructor(private formBuilder:FormBuilder, private regService:RegisterUserService, private toastr:ToastrService, private navigator:Router) {
     
   }
 
@@ -43,18 +44,19 @@ export class RegisterUserComponent implements OnInit {
           this.toastr.error('E-mail já está em uso', 'Erro');
           return;
         }
+
+        let user = this.form.value;
+        this.regService.saveUser(user).subscribe(response => {
+          this.toastr.success('Registro efetuado', 'Sucesso!');
+          this.navigator.navigate(['login']);
+        }, err => {
+          this.toastr.error('Erro ao fazer registro', 'Erro');
+          return;
+        });
     }, err => {
       this.toastr.error('Erro ao fazer registro', 'Erro');
       return;
     })
-
-    let user = this.form.value;
-    this.regService.saveUser(user).subscribe(response => {
-      this.toastr.success('Registro efetuado', 'Sucesso!');
-    }, err => {
-      this.toastr.error('Erro ao fazer registro', 'Erro');
-      return;
-    });
   }
 
 }

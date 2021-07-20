@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
 import { PhoneComponent } from './phone/phone.component';
 import { AddressComponent } from './address/address.component';
+import { CustomerComponent } from './customer/customer.component';
 
 
 
@@ -14,11 +15,15 @@ import { AddressComponent } from './address/address.component';
     HomeComponent,
     NavComponent,
     PhoneComponent,
-    AddressComponent
+    AddressComponent,
+    CustomerComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
+  ],
+  exports: [
+    NavComponent
   ]
 })
 export class HomeModule { }

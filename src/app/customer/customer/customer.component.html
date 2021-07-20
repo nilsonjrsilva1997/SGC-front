@@ -1,3 +1,5 @@
+<app-nav></app-nav>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-12 mt-5">
@@ -6,9 +8,16 @@
     </div>
 </div>
 
+
 <form [formGroup]="form">
     <div class="container">
         <div class="row">
+            <div class="col-md-3 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" required placeholder="Nome completo *" formControlName="fullName">
+                    <div class="alert alert-danger mt-1" *ngIf="form.controls.fullName?.errors?.required">Nome completo é obrigatório.</div>
+                </div>
+            </div>
             <div class="col-md-3 col-12">
                 <div class="form-group">
                     <input type="text" class="form-control" required formControlName="name"
@@ -23,29 +32,13 @@
                         <div class="alert alert-danger mt-1" *ngIf="form.controls.cpfCnpj?.errors?.required">Campo CPF ou CNPJ obrigatório.</div>
                 </div>
             </div>
-            <div class="col-md-3 col-12">
-                <div class="form-group">
-                    <input type="text" class="form-control" required formControlName="fullName"
-                        placeholder="Nome Completo *">
-                        <div class="alert alert-danger mt-1" *ngIf="form.controls.fullName?.errors?.required">Nome completo é obrigatório.</div>
-                </div>
-            </div>
+       
             <div class="col-md-3 col-12">
                 <div class="form-group">
                     <input type="text" class="form-control" required placeholder="E-mail *" formControlName="email">
                     <div class="alert alert-danger mt-1" *ngIf="form.controls.email?.errors?.required">E-mail é obrigatório.</div>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-12">
-                <div class="form-group">
-                    <input type="password" class="form-control" required
-                        formControlName="password" placeholder="Senha *">
-                        <div class="alert alert-danger mt-1" *ngIf="form.controls.password?.errors?.required">Senha é obrigatória.</div>
-                </div>
-            </div>           
         </div>
 
         <div [formGroup]="form">
@@ -106,8 +99,7 @@
                             </div>
 
                             <div class="col-md-3">
-                                <input type="text" class="form-control" p
-                                laceholder="Complemento"
+                                <input type="text" class="form-control" placeholder="Complemento"
                                     formControlName="complement">
                                     <div class="alert alert-danger mt-1" *ngIf="$any(addressForm).get('complement').hasError('required')">Complemento é obrigatória</div>
 
@@ -144,7 +136,7 @@
         <div class="row mt-3">
             <div class="col-md-12">
                 <div class="form-group d-flex justify-content-end">
-                    <input type="submit" class="btn btn-primary" (click)="register()" value="Registrar">
+                    <input type="submit" class="btn btn-primary" (click)="customer()" value="Registrar">
                 </div>
             </div>
         </div>
